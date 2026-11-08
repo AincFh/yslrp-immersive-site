@@ -1,13 +1,28 @@
-# YSLRP 海外独立互动官网（v7）
+# YSLRP — Scroll Cinema (v8)
 
-完全独立的 FiveM / GTA V RP 服务器介绍站。此版不参考既有国内站的 UI/内容模块，也没有复制其任何截图或图像；仅使用用户提供的兔耳动漫品牌 logo。其余内容为此站独立制作的 SVG 城市示意和 CSS 程序生成动画。
+An independent landing site for the fictional Saint Laurent GTA V/FiveM roleplay server. Intentionally **not** a duplicate of the existing mainland website.
 
-零服务器：纯静态 HTML、CSS、JS、SVG/WebP；Cloudflare Pages Free、GitHub 自动部署、无数据库、无注册和付费后端。无外部视频和动态字体依赖。
+## Technology and deployment
 
-功能：滚动驱动三幕叙事 / 原创地图动效 / RP 场景交互 / 职业切换 / 规则折叠 / 免白 FiveM F8 指令复制 / KOOK & FiveM 真实入口 / 手机菜单。
+- Pure HTML + CSS + vanilla JavaScript; no build step, no database, no user accounts, no back end, no CDN script/runtime, no paid Cloudflare dependency.
+- Scroll narrative adapts pinned/scrubbed scroll-staging ideas from public GSAP ScrollTrigger and Codrops examples, but the implementation in this repository is **original vanilla JS**. No third-party example code or assets were copied.
+- Cloudflare Pages (Git integration): root `/`, build command *empty*, output `/` (or `.` as accepted by UI), static files at repository root.
+- Custom domains currently assigned to this project: `yslrp.com` and `www.yslrp.com`.
+- Mobile, keyboard, and `prefers-reduced-motion` support. Native scrolling retained, native scrollbar visually hidden, no forced wheel interception or scroll-jacking.
+- Site presentation right-click: contextual menu on non-interactive visual regions only; links, text selection, inputs, and keyboard navigation remain available.
 
-部署：Cloudflare Pages Git 连接本仓库，构建命令留空，输出根目录 `/`；域名 yslrp.com 等 Cloudflare NS 激活后在 Pages 自定义域绑定；www 设置别名或重定向。
+## Naming and locales
 
-## Review build
+International brand: **YSLRP**. Chinese descriptor: **圣罗兰角色扮演**. English descriptor: **Saint Laurent Roleplay**.
+Two fully translated content languages: `zh-CN` and `en`, auto-detected from the browser language and manually switchable. Preference is stored locally in the browser only.
 
-Preview branch kept separate until Cloudflare Pages navigation, image loading, responsive layout and interactive controls pass verification.
+## Truthfulness
+
+- This site is an *introduction* to a fictional GTA V / FiveM RP environment, not a direct replica of the game, and the art is not actual server screenshots.
+- Published information: Chinese voice-oriented light RP, no-whitelist entry and `connect pga8dp7`; subject to latest official updates.
+- No invented online-player counts, real-time API claims, or server status values.
+- KOOK join link and FiveM entry link are explicit outbound actions.
+
+## Quality checks
+
+`node --check app.js`, local image/size manifest and browser (desktop and mobile) visual testing required before publishing production. Branch preview first; production only after review.
