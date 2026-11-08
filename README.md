@@ -1,24 +1,23 @@
-# YSLRP · 圣罗兰 RP 海外介绍站
+# YSLRP / 圣罗兰海外介绍站
 
-本项目仅服务于 **yslrp.com**，是零后端、零数据库、无注册的纯静态 FiveM / GTA V 角色扮演世界介绍页。
+一个真正可部署到 **Cloudflare Pages Free** 的静态网站。仓库包含纯 HTML、CSS、JavaScript 和本地 WebP 视觉素材，没有服务器端运行时、数据库、账户、论坛、R2、付费 Cloudflare 服务或外部 JS CDN。
 
-## 已实现
-- 中文优先的站点信息架构：简介、城市、角色、故事、视觉画廊、参与指南、常见问题
-- 自定义右侧章节指示器与进度条；隐藏系统滚动条外观，但保留原生滚动/触屏/键盘操作
-- 交互：城市氛围切换、角色选项卡、剧情选择、画廊弹层、Esc 关闭、移动端菜单
-- 降低动画设置、响应式布局、键盘可访问性、避免横向溢出
-- HTML/CSS/JS 内嵌在 index.html，不依赖外置 CSS/JS 文件，不需要构建
-- 页面中的摄影素材仅为城市气氛示意，非 FiveM 服务器实机截图，详见 MEDIA_SOURCES.md
+## 设计
 
-## Cloudflare Pages Free
-选择 GitHub 仓库 `AincFh/yslrp-immersive-site`，框架选 None，生产分支 main；Build command 留空，输出目录为根目录 `/` 或 `.`。绑定域名 `yslrp.com` 前先验证 Cloudflare 分配的 pages.dev 预览链接。无需购买主机、R2、D1、Workers Paid。
+清晰的中文 FiveM / GTA V RP 介绍、官方品牌、场景选择器、滚动叙事、可切换角色、可切换放大画廊、参与指南。设计注重排版与游戏场景，而不是空洞的装饰效果。
 
-本仓库不修改国内 `yslfivem.com`，该域名只是网站上的站外链接。
+## 部署
 
-## 本地预览
-直接用浏览器打开 index.html 或在仓库根目录运行 `python -m http.server 8000`。
+Cloudflare Pages Git 集成选择 `AincFh/yslrp-immersive-site`，根目录 `/`，Framework preset `None`，Build command **留空**，输出目录 `/`。通过 Git 自动发布和 PR 预览。全是静态资源，没有构建依赖。请先检查 pages.dev 发布结果，再绑定 yslrp.com。
 
-## 边界
-- 不含账户、论坛、后台、数据库或数据存储
-- 角色与场景是概念性展示，不代表某部门开放招募或服务器实际实装细节
-- 外部 Unsplash 图片可能受网络影响，网站保留纯 CSS 渐变背景降级
+如果 Cloudflare 控制台的 Pages 项目已经链接该仓库，推送至 main 会自动部署，不要重新创建同名项目。自定义域需要域名已托管于 Cloudflare DNS；在域名 NS 切换前检查旧 DNS 记录、邮件记录及 DNSSEC。
+
+## 兼容性与测试
+
+桌面与移动端均采用语义化 HTML、键盘可操作按钮、减少动画偏好支持及图片加载降级。支持无原生可见滚动条的自然滚动；不禁用键盘和触摸滚动。
+
+所有视觉素材记录见 MEDIA_SOURCES.md。
+
+## 网站边界
+
+只管理 `yslrp.com` 海外介绍站，不修改国内 `yslfivem.com` 站点、业务系统、数据库或ICP备案信息。国内官网仅作为站外链接目的地。 

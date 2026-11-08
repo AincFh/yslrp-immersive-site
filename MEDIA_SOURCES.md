@@ -1,12 +1,17 @@
-# YSLRP 图片素材来源与授权
+# YSLRP 视觉素材登记
 
-本页面的代码、CSS 动画与互动逻辑是项目自制。使用摄影素材时明确标注为真实城市氛围参考，**不属于 GTA V / FiveM 的游戏实机截图**。
+本版已经移除上一个版本的 Unsplash 现实城市图片，改为从用户管理的圣罗兰官网 `https://yslfivem.com/` 所公开发布的品牌与游戏主题素材取用，经浏览器转换为压缩 WebP，再存放于本仓库 `assets/`。无需运行时从国内官网引用资源。
 
-- Venti Views，City skyline at dusk with highway traffic below（2026-01-06）：https://unsplash.com/photos/city-skyline-at-dusk-with-highway-traffic-below-3fYHcSWws7k
-- Qihang Fan，City street at night with car light trails（2026-02-13）：https://unsplash.com/photos/city-street-at-night-with-car-light-trails-aS6KlgSXbOo
-- Kelvin Taylor，A dimly lit urban loading dock at night（2026-03-06）：https://unsplash.com/photos/a-dimly-lit-urban-loading-dock-at-night-tujuazi5ejs
-- Venti Views，Aerial view of city buildings during night time：https://unsplash.com/photos/aerial-view-of-city-buildings-during-night-time-xiQLGY-bUgE
+| 文件 | 原站相对路径 | 用途 |
+|---|---|---|
+| assets/brand-logo.webp | /portal/unified-rounded-logo-20260722.png | 品牌标识 |
+| assets/hero.webp | /portal/video/library/posters/saint-laurent-promo.jpg | 开场游戏世界画面 |
+| assets/city-sunset.webp | /portal/hero/gta-city-sunset.webp | 日落 / 叙事章节 |
+| assets/city-hub.webp | /portal/hero/gta-transport-hub.webp | 城市生活 |
+| assets/police.webp | /portal/hero/game/lspd-mission-row-day.jpg | 警务 |
+| assets/medical.webp | /portal/hero/game/hosp-central.jpg | 医疗 |
+| assets/justice.webp | /portal/hero/game/sadoj-court-hall.jpg | 司法 |
+| assets/highway.webp | /portal/hero/game/sahp-coastal-cruiser.jpg | 公路 |
+| assets/port.webp | /portal/hero/game/ema-port-cranes.jpg | 港区 |
 
-授权核查：https://unsplash.com/license 。Unsplash 免费许可允许通常的商业与非商业使用和修改，但不可销售未作充分改动的原照片或将图片汇编为竞品图库；照片包含商标、可识别人物、其他知识产权时可能需要额外授权。
-
-使用的是 images.unsplash.com CDN 资源。若 CDN 不可用，页面降级显示 CSS 背景。后续将这些照片替换为官方持有授权的 FiveM 实机画面时，要同步修改此记录与站内“非实机”说明。
+使用者仍需确认这些原站素材的实际授权范围，不因公开可访问就默认可以自由转授权。图片仅用于自有圣罗兰宣传项目；GTA、FiveM、Rockstar 等标识及游戏素材的权利属于各自权利人。本网站声明虚构游戏社区身份，不代表官方游戏发行方。
