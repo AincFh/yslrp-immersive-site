@@ -7,3 +7,7 @@
 功能：滚动驱动三幕叙事 / 原创地图动效 / RP 场景交互 / 职业切换 / 规则折叠 / 免白 FiveM F8 指令复制 / KOOK & FiveM 真实入口 / 手机菜单。
 
 部署：Cloudflare Pages Git 连接本仓库，构建命令留空，输出根目录 `/`；域名 yslrp.com 等 Cloudflare NS 激活后在 Pages 自定义域绑定；www 设置别名或重定向。
+
+## Review build
+
+Preview branch kept separate until Cloudflare Pages navigation, image loading, responsive layout and interactive controls pass verification.
