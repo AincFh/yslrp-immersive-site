@@ -1,0 +1,22 @@
+# YSLRP — Saint Laurent Roleplay
+
+> Independent overseas introduction website for YSLRP, a Chinese-language GTA V / FiveM roleplay community set in a fictional San Andreas world.
+
+## About
+- [What is YSLRP?](https://yslrp.com/#manifesto): an introduction to the community, its Chinese voice roleplay format and open-access concept.
+- [World and storytelling](https://yslrp.com/#world): interactive concept-art storytelling about a fictional roleplay city.
+- [Roleplay paths](https://yslrp.com/#roles): examples of civilian life and fictional character perspectives; availability may change.
+- [How roleplay works](https://yslrp.com/#experience): explanatory interactive examples, not actual gameplay missions.
+- [Participation principles](https://yslrp.com/#principles): introductory roleplay etiquette, including in-character and out-of-character boundaries.
+- [How to join](https://yslrp.com/#join): FiveM connection guidance and community links.
+
+## Languages
+The site supports Simplified Chinese and English. Visitors can use the language control to switch languages.
+
+## Official participation links
+- [FiveM direct join](https://cfx.re/join/pga8dp7)
+- [KOOK community](https://kook.vip/eo8Jcl)
+- [Full rules and updates](https://yslfivem.com/rules)
+
+## Scope
+This is a static informational site. It has no user registration, online forum, financial transaction, or account database. The cinematic images are conceptual illustrations and are not actual screenshots of the YSLRP server. All government and law-enforcement references are fictional, and YSLRP is not affiliated with Rockstar Games or Cfx.re.
