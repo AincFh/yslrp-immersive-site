@@ -1,23 +1,9 @@
-# YSLRP / 圣罗兰海外介绍站
+# YSLRP 海外独立互动官网（v7）
 
-一个真正可部署到 **Cloudflare Pages Free** 的静态网站。仓库包含纯 HTML、CSS、JavaScript 和本地 WebP 视觉素材，没有服务器端运行时、数据库、账户、论坛、R2、付费 Cloudflare 服务或外部 JS CDN。
+完全独立的 FiveM / GTA V RP 服务器介绍站。此版不参考既有国内站的 UI/内容模块，也没有复制其任何截图或图像；仅使用用户提供的兔耳动漫品牌 logo。其余内容为此站独立制作的 SVG 城市示意和 CSS 程序生成动画。
 
-## 设计
+零服务器：纯静态 HTML、CSS、JS、SVG/WebP；Cloudflare Pages Free、GitHub 自动部署、无数据库、无注册和付费后端。无外部视频和动态字体依赖。
 
-清晰的中文 FiveM / GTA V RP 介绍、官方品牌、场景选择器、滚动叙事、可切换角色、可切换放大画廊、参与指南。设计注重排版与游戏场景，而不是空洞的装饰效果。
+功能：滚动驱动三幕叙事 / 原创地图动效 / RP 场景交互 / 职业切换 / 规则折叠 / 免白 FiveM F8 指令复制 / KOOK & FiveM 真实入口 / 手机菜单。
 
-## 部署
-
-Cloudflare Pages Git 集成选择 `AincFh/yslrp-immersive-site`，根目录 `/`，Framework preset `None`，Build command **留空**，输出目录 `/`。通过 Git 自动发布和 PR 预览。全是静态资源，没有构建依赖。请先检查 pages.dev 发布结果，再绑定 yslrp.com。
-
-如果 Cloudflare 控制台的 Pages 项目已经链接该仓库，推送至 main 会自动部署，不要重新创建同名项目。自定义域需要域名已托管于 Cloudflare DNS；在域名 NS 切换前检查旧 DNS 记录、邮件记录及 DNSSEC。
-
-## 兼容性与测试
-
-桌面与移动端均采用语义化 HTML、键盘可操作按钮、减少动画偏好支持及图片加载降级。支持无原生可见滚动条的自然滚动；不禁用键盘和触摸滚动。
-
-所有视觉素材记录见 MEDIA_SOURCES.md。
-
-## 网站边界
-
-只管理 `yslrp.com` 海外介绍站，不修改国内 `yslfivem.com` 站点、业务系统、数据库或ICP备案信息。国内官网仅作为站外链接目的地。 
+部署：Cloudflare Pages Git 连接本仓库，构建命令留空，输出根目录 `/`；域名 yslrp.com 等 Cloudflare NS 激活后在 Pages 自定义域绑定；www 设置别名或重定向。
