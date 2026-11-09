@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#080b15"><meta name="yslrp-motion" content="v11-preview">
+<meta name="theme-color" content="#080b15">
 <meta name="description" content="YSLRP 圣罗兰角色扮演 — FiveM / GTA V 中文语音轻量 RP 服务器。探索城市、体验角色、了解规则与免白加入方式。">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="YSLRP · Saint Laurent Roleplay">
@@ -224,8 +224,8 @@ html{scrollbar-width:none}html::-webkit-scrollbar{display:none}
 @media(max-width:600px){.hero-sequence img{object-position:62% center}}
 @media(prefers-reduced-motion:reduce){.hero-sequence{opacity:0!important;display:none}}
 </style>
-<title>YSLRP — Saint Laurent Roleplay | An Interactive World</title>
 <link rel="stylesheet" href="/motion-v11.css">
+<title>YSLRP — Saint Laurent Roleplay | An Interactive World</title>
 </head>
 <body>
 <a class="skip-link" href="#manifesto" data-i18n="skip">跳至主要内容</a>
@@ -345,45 +345,58 @@ function applyLocale(lang){if(!dict[lang])return;locale=lang;document.documentEl
 const langTrigger=$('#langTrigger'),langMenu=$('#langMenu');langTrigger.addEventListener('click',()=>{langMenu.hidden=!langMenu.hidden;langTrigger.setAttribute('aria-expanded',String(!langMenu.hidden))});$$('[data-lang]').forEach(b=>b.addEventListener('click',()=>applyLocale(b.dataset.lang)));
 document.addEventListener('click',e=>{if(!e.target.closest('.lang-control')){langMenu.hidden=true;langTrigger.setAttribute('aria-expanded','false')}});
 const mobileMenu=$('#mobileMenu'),menuToggle=$('#menuToggle');function setMenu(open){mobileMenu.classList.toggle('open',open);mobileMenu.inert=!open;menuToggle.setAttribute('aria-expanded',String(open));document.body.classList.toggle('menu-open',open);if(open)mobileMenu.querySelector('a')?.focus();else menuToggle.focus();}menuToggle.addEventListener('click',()=>setMenu(!mobileMenu.classList.contains('open')));$$('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
-const progress=$('#pageProgress'),header=$('#siteHeader'),rail=$$('.chapter-rail a');const sections=['home','manifesto','world','roles','experience','principles','join'];let scrollY=0,scrollQueued=false,presentationY=window.scrollY,worldIndex=0,experienceIndex=0,roleIndex=0,toastTimeout;
-function scrollProgress(element){const top=element.getBoundingClientRect().top+window.scrollY,space=Math.max(1,element.offsetHeight-innerHeight);return clamp((presentationY-top)/space)}
-const hero=$('#home'),manifesto=$('#manifesto'),world=$('#world'),roles=$('#roles');
-const storyScenes=$$('.world-scene');const worldBars=$$('#worldBars i');const roleTrack=$('#rolesTrack');
-const storyData=[['THE STREETS','worldTitle0','worldDesc0'],['THE ROAD','worldTitle1','worldDesc1'],['THE PEOPLE','worldTitle2','worldDesc2']];
-function updateWorldText(force=false){const row=storyData[worldIndex];$('#worldAct').textContent=`0${worldIndex+1} / ${row[0]}`;$('#worldTitle').innerHTML=dict[locale][row[1]];$('#worldDescription').textContent=dict[locale][row[2]];$('#worldCount').innerHTML=`0${worldIndex+1} <span>/ 03</span>`;worldBars.forEach((el,i)=>el.classList.toggle('active',i===worldIndex));}
-function updateExperience(force=false){const n=experienceIndex;$('#experienceNumber').textContent=String(n+1).padStart(2,'0');$('#experienceAct').textContent=['CHAPTER ONE / ARRIVAL','CHAPTER TWO / CONNECT','CHAPTER THREE / BECOME'][n];$('#experienceResult').textContent=dict[locale]['choiceTitle'+n];$('#experienceText').textContent=dict[locale]['choiceDesc'+n];$$('[data-choice]').forEach((b,i)=>{b.classList.toggle('selected',i===n);b.setAttribute('aria-pressed',String(i===n))});}
-$$('[data-choice]').forEach(b=>b.addEventListener('click',()=>{experienceIndex=Number(b.dataset.choice);updateExperience();$('#experienceNumber').animate([{transform:'scale(.72)',opacity:.4},{transform:'scale(1)',opacity:1}],{duration:430,easing:'cubic-bezier(.22,1,.36,1)'})}));
-function compute(){
- const y=window.scrollY||0;presentationY=y;scrollY=y;window.__yslrpPresentationScrollY=y;
- const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+const progress=$('#pageProgress'),header=$('#siteHeader'),rail=$$('.chapter-rail a');
+const sections=['home','manifesto','world','roles','experience','principles','join'];
+let experienceIndex=0,toastTimeout,navPending=false;
+window.__yslrpI18n={dict};
+function updateWorldText(){document.dispatchEvent(new CustomEvent('yslrp:locale-updated'))}
+function updateExperience(){
+ const n=experienceIndex;
+ $('#experienceNumber').textContent=String(n+1).padStart(2,'0');
+ $('#experienceAct').textContent=['CHAPTER ONE / ARRIVAL','CHAPTER TWO / CONNECT','CHAPTER THREE / BECOME'][n];
+ $('#experienceResult').textContent=dict[locale]['choiceTitle'+n];
+ $('#experienceText').textContent=dict[locale]['choiceDesc'+n];
+ $$('[data-choice]').forEach((b,i)=>{b.classList.toggle('selected',i===n);b.setAttribute('aria-pressed',String(i===n))});
+}
+$$('[data-choice]').forEach(b=>b.addEventListener('click',()=>{
+ experienceIndex=Number(b.dataset.choice);updateExperience();
+ if(!reduced)$('#experienceNumber').animate([{opacity:.5,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}],{duration:360,easing:'ease-out'});
+}));
+function updateNav(){
+ const y=window.scrollY||0,max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
  progress.style.width=(y/max*100).toFixed(2)+'%';header.classList.toggle('scrolled',y>28);
- let active='home';for(const id of sections){if($('#'+id).getBoundingClientRect().top<innerHeight*.53)active=id;}
- rail.forEach(a=>{const yes=a.dataset.chapter===active;a.classList.toggle('active',yes);if(yes)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')});
+ const center=innerHeight*.52;let active='home';
+ for(const id of sections){const el=$('#'+id);if(el&&el.getBoundingClientRect().top<center)active=id;}
+ rail.forEach(a=>{const selected=a.dataset.chapter===active;a.classList.toggle('active',selected);if(selected)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')});
  $('#chapterNow').textContent=String(sections.indexOf(active)+1).padStart(2,'0')+' / 07';
  $('.chapter-rail').classList.toggle('on-light',active==='manifesto'||active==='roles');
- $('.site-nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+active));
+ $$('.site-nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+active));
+ navPending=false;
 }
-function queueScroll(){if(scrollQueued)return;scrollQueued=true;requestAnimationFrame(()=>{scrollQueued=false;compute()})}
-window.addEventListener('scroll',queueScroll,{passive:true});
-window.addEventListener('resize',queueScroll,{passive:true});
-window.addEventListener('pageshow',queueScroll,{passive:true});
-function jumpRole(delta){const next=clamp(roleIndex+delta,0,3);const target=roles.offsetTop+(roles.offsetHeight-innerHeight)*(next/3);window.scrollTo({top:Math.max(0,target),behavior:reduced?'auto':'smooth'})}
-$('#rolePrev').addEventListener('click',()=>jumpRole(-1));$('#roleNext').addEventListener('click',()=>jumpRole(1));
+function queueNav(){if(!navPending){navPending=true;requestAnimationFrame(updateNav)}}
+addEventListener('scroll',queueNav,{passive:true});addEventListener('resize',queueNav,{passive:true});
+function jumpRole(delta){
+ const roles=$('#roles');const p=clamp((window.scrollY-roles.offsetTop)/Math.max(1,roles.offsetHeight-innerHeight));
+ const current=Math.round(p*3),next=clamp(current+delta,0,3),target=roles.offsetTop+(roles.offsetHeight-innerHeight)*next/3;
+ if(window.__yslrpLenis)window.__yslrpLenis.scrollTo(target,{duration:1.1});else window.scrollTo({top:target,behavior:reduced?'instant':'smooth'});
+}
+$('#rolePrev').addEventListener('click',()=>jumpRole(-1));
+$('#roleNext').addEventListener('click',()=>jumpRole(1));
 function toast(str){const el=$('#toast');el.textContent=str;el.classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>el.classList.remove('show'),2000)}
 $('#copyCommand').addEventListener('click',async()=>{try{await navigator.clipboard.writeText('connect pga8dp7');toast(dict[locale].copied)}catch(e){try{const x=document.createElement('textarea');x.value='connect pga8dp7';x.style.position='fixed';x.style.left='-9999px';document.body.appendChild(x);x.select();const success=document.execCommand('copy');x.remove();toast(success?dict[locale].copied:dict[locale].copyError)}catch(e2){toast(dict[locale].copyError)}}});
 const context=$('#contextMenu');document.querySelector('main').addEventListener('contextmenu',e=>{if(e.target.closest('a,button,input,textarea,select,code'))return;if(String(window.getSelection()).trim())return;e.preventDefault();context.hidden=false;context.style.left=Math.max(12,Math.min(innerWidth-165,e.clientX))+'px';context.style.top=Math.max(12,Math.min(innerHeight-155,e.clientY))+'px';context.querySelector('button')?.focus()});context.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;context.hidden=true;const key=b.dataset.action;$('#'+(key==='home'?'home':key==='world'?'world':'join')).scrollIntoView({behavior:reduced?'auto':'smooth'});});document.addEventListener('pointerdown',e=>{if(!e.target.closest('#contextMenu'))context.hidden=true});document.addEventListener('keydown',e=>{if(e.key==='Escape'){context.hidden=true;langMenu.hidden=true;if(mobileMenu.classList.contains('open'))setMenu(false)}});
 $$('img').forEach(img=>img.draggable=false);document.addEventListener('dragstart',e=>{if(e.target instanceof HTMLImageElement)e.preventDefault()});
-if(!coarse&&!reduced){document.addEventListener('pointermove',e=>{if(e.pointerType==='mouse'){document.body.classList.add('pointer-active');$('#pointerGlow').style.left=e.clientX+'px';$('#pointerGlow').style.top=e.clientY+'px'}},{passive:true});document.addEventListener('pointerleave',()=>document.body.classList.remove('pointer-active'))}
 if(reduced){document.body.classList.add('reduced-motion');$$('.world-scene').forEach((sc,i)=>sc.style.opacity=String(i===0));$('#manifestoCopy').style.opacity='1';$('#manifestoCopy').style.transform='none';$('#manifestoImage').style.right='5vw';$('#manifestoImage').style.opacity='1';$('#manifestoImage').style.transform='none';$('#heroVideo').pause();}
 else{const v=$('#heroVideo');v.addEventListener('error',()=>{v.style.display='none'});v.play().catch(()=>{v.style.display='none'});}
-window.__yslrpI18n={dict,get locale(){return locale}};
-applyLocale(chooseInitialLocale());compute();
+applyLocale(chooseInitialLocale());updateNav();
 })();
 
 
 </script>
-<script src="/lib/gsap.min.js" defer></script>
-<script src="/lib/ScrollTrigger.min.js" defer></script>
-<script src="/lib/lenis.min.js" defer></script>
-<script src="/motion-v11.js" defer></script>
-</body></html>
+<script src="/lib/gsap.min.js"></script>
+<script src="/lib/ScrollTrigger.min.js"></script>
+<script src="/lib/lenis.min.js"></script>
+<script src="/portal-i18n.js"></script>
+<script src="/motion-v11.js"></script>
+</body>
+</html>
