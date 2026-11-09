@@ -8,7 +8,7 @@ body{overscroll-behavior-y:auto}
 .hero-sequence canvas{display:block;width:100%;height:100%;object-fit:cover;transform:translateZ(0);pointer-events:none}
 .hero-scroll .hero-content,.manifesto-heading,.manifesto-copy,.manifesto-reveal-image,
 .identity-title,.identity-content,.seam-copy,.seam-end,.roles-track,.world-text-layer,.principle-plate{backface-visibility:hidden}
-.world-copy{min-height:340px;top:47%;z-index:8}
+.world-copy{width:min(890px,calc(100vw - 180px));min-height:340px;top:47%;z-index:8}
 .world-text-layer{position:absolute;left:0;top:0;right:0;max-width:870px;visibility:hidden;opacity:0;transform:translate3d(0,55px,0);will-change:transform,opacity}
 .world-text-layer:first-child{visibility:visible;opacity:1;transform:none}
 .world-text-layer .world-title{max-width:850px}
@@ -26,7 +26,7 @@ body{overscroll-behavior-y:auto}
 #heroSequenceA,#heroSequenceB{display:none}
 .motion-debug{display:none}
 @media(max-width:700px){
- .world-copy{min-height:280px;top:42%}
+ .world-copy{width:calc(100vw - 40px);min-height:280px;top:42%}
  .world-text-layer .world-title{font-size:clamp(48px,12vw,84px)}
  .principles-scene{min-height:260px}
  .hero-sequence canvas{object-position:61% center}
