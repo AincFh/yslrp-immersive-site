@@ -265,3 +265,15 @@ body.v12-editorial::before{content:"";position:fixed;inset:0;z-index:245;pointer
  .v12-editorial .pill{transition:none!important}
  .v12-editorial .hero-photo{filter:brightness(.78) saturate(.7)}
 }
+/* V12.1 visual QA: fix legacy off-screen manifesto photograph; keep hero controls clear */
+@media(min-width:901px){
+ .v12-editorial .hero-content{top:30%}
+}
+.v12-editorial #manifestoImage{right:8%!important}
+@media(max-width:900px){
+ .v12-editorial #manifestoImage{right:7%!important}
+}
+@media(max-width:700px){
+ .v12-editorial #manifestoImage{top:14%!important;right:10%!important;width:80vw!important;height:29svh!important}
+ .v12-editorial #manifestoCopy{bottom:9%!important}
+}
