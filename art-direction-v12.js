@@ -55,6 +55,20 @@
    panel.prepend(visual);
  });
 
+ // Turn the RP decision exercise into an illustrated journal spread,
+ // without changing its buttons, choice state, or explanatory semantics.
+ const scene=$('#experience .experience-left');
+ if(scene && unique.length && !$('.v12-experience-photo',scene)){
+   const visual=document.createElement('div');
+   visual.className='v12-experience-photo';
+   visual.setAttribute('aria-hidden','true');
+   const image=document.createElement('img');
+   image.src=unique[Math.min(2,unique.length-1)].src;
+   image.alt='';image.decoding='async';image.loading='lazy';
+   visual.append(image);
+   scene.prepend(visual);
+ }
+
  // One understated cinematic drift, driven by the same GSAP/ScrollTrigger
  // clock already responsible for section progress (no wheel interception).
  if(!reduced&&epigraph&&window.gsap&&window.ScrollTrigger){
@@ -68,6 +82,7 @@
   direction:'Cinematic Editorial / City Portrait',
   photographyPanels:panels.filter(p=>!!$('.v12-role-image img',p)).length,
   sourcesReused:unique.length,
+  illustratedExperience:!!$('.v12-experience-photo img'),
   get reducedMotion(){return reduced}
  };
 })();
