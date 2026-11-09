@@ -15,7 +15,7 @@ gs.registerPlugin(ST);ST.config({ignoreMobileResize:true,limitCallbacks:true});
 const finePointer=fine&&!reduced;
 let lenis=null;
 if(!reduced&&typeof window.Lenis==='function'){
- lenis=new Lenis({lerp:0.105,smoothWheel:true,wheelMultiplier:0.94,syncTouch:false});
+ lenis=new Lenis({lerp:0.13,smoothWheel:true,wheelMultiplier:0.94,syncTouch:false});
  lenis.on('scroll',ST.update);
  gs.ticker.add(t=>lenis.raf(t*1000));
  gs.ticker.lagSmoothing(0);
@@ -25,7 +25,7 @@ const scrollTo=(el)=>{const target=typeof el==='string'?$(el):el;if(!target)retu
 $$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href');if(!id || id.length<2 || !document.getElementById(id.slice(1)))return;e.preventDefault();history.replaceState(null,'',id);scrollTo(id);}));
 const easing='power2.inOut';
 const scrollEnd=el=>'bottom bottom';
-function timeline(el,scrub=.68){return gs.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:el,start:'top top',end:scrollEnd(el),scrub,invalidateOnRefresh:true}});}
+function timeline(el,scrub=.22){return gs.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:el,start:'top top',end:scrollEnd(el),scrub,invalidateOnRefresh:true}});}
 function visibleState(node,show){gs.set(node,{autoAlpha:show?1:0});}
 function prepareFrameCanvas(){
  const list=window.__YS_FRAME_DATA;
@@ -63,7 +63,7 @@ if(reduced){const v=$('#heroVideo');v?.pause();return;}
 const hero=$('#home'),photo=$('#heroPhoto'),content=$('#heroContent'),frame=$('#heroFrame'),hTrans=$('.hero-transition');
 if(hero&&photo&&content){
  gs.set(photo,{yPercent:0,scale:1.05});gs.set(content,{y:0,autoAlpha:1});gs.set(hTrans,{yPercent:105});
- const tl=timeline(hero,.57);
+ const tl=timeline(hero,.18);
  tl.to(photo,{scale:1.23,yPercent:-3,duration:1},0)
  .to(frame,{scale:.82,opacity:.2,duration:.78},.10)
  .to(content,{y:-124,autoAlpha:0,duration:.31,ease:'power2.in'},.25)
@@ -74,7 +74,7 @@ const man=$('#manifesto'),head=$('#manifestoHeading'),manImage=$('#manifestoImag
 if(man&&head&&manImage&&manCopy){
  gs.set(manImage,{xPercent:55,scale:.76,rotation:3,autoAlpha:0});
  gs.set(manCopy,{y:75,autoAlpha:0});
- const tl=timeline(man,.6);
+ const tl=timeline(man,.20);
  tl.to(head,{y:-90,scale:1.10,autoAlpha:0,duration:.30,ease:'power2.inOut'},.09)
  .to(manImage,{xPercent:0,scale:1,rotation:0,autoAlpha:1,duration:.52,ease:easing},.18)
  .to(manCopy,{y:0,autoAlpha:1,duration:.25,ease:'power2.out'},.60);
@@ -83,7 +83,7 @@ const identity=$('#identity'),idTitle=$('#identityTitle'),idCopy=$('.identity-co
 if(identity&&idTitle&&idCopy){
  gs.set(idTitle,{xPercent:-50,yPercent:-50,x:0,y:0,scale:.60,rotation:-5,autoAlpha:.20});
  gs.set(idCopy,{y:60,autoAlpha:0});
- const tl=timeline(identity,.66);
+ const tl=timeline(identity,.23);
  tl.to(idTitle,{scale:1.03,rotation:0,autoAlpha:.96,duration:.34,ease:easing},.05)
  .to(idTitle,{scale:.84,y:-63,autoAlpha:.28,duration:.34,ease:'power2.inOut'},.37)
  .to(idCopy,{y:0,autoAlpha:1,duration:.26,ease:'power2.out'},.49)
@@ -97,7 +97,7 @@ if(seam&&seamPicture&&seamCopy&&seamBands){
  gs.set(seamEnd,{y:55,autoAlpha:0});
  const bands=$$('.seam-band');
  bands.forEach((b,i)=>gs.set(b,{x:(i%2?-1:1)*Math.max(innerWidth*.95,440)}));
- const tl=timeline(seam,.70);
+ const tl=timeline(seam,.23);
  tl.to(seamPicture,{scale:1.055,borderRadius:0,duration:.33,ease:easing},.03)
  .to(seamCopy,{y:-90,autoAlpha:0,duration:.17,ease:'power2.in'},.22)
  .to(seamBands,{autoAlpha:1,duration:.1},.27)
@@ -125,7 +125,7 @@ if(world&&worldCopy&&worldScenes.length===3){
  setWorldLang();new MutationObserver(setWorldLang).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
  gs.set(plates[0],{autoAlpha:1,y:0});gs.set(plates.slice(1),{autoAlpha:0,y:62});
  gs.set(worldScenes[0],{autoAlpha:1});gs.set(worldScenes[1],{clipPath:'inset(0 100% 0 0)',autoAlpha:1});gs.set(worldScenes[2],{clipPath:'inset(100% 0 0 0)',autoAlpha:1});
- const tl=timeline(world,.60);
+ const tl=timeline(world,.22);
  tl.to(worldScenes[0].querySelector('img'),{scale:1.13,duration:1},0)
  .to(worldScenes[1],{clipPath:'inset(0 0% 0 0)',duration:.35,ease:easing},.18)
  .to(plates[0],{y:-70,autoAlpha:0,duration:.16,ease:'power2.in'},.18)
@@ -143,7 +143,7 @@ const roles=$('#roles'),track=$('#rolesTrack'),rolesViewport=$('.roles-viewport'
 if(roles&&track&&rolesViewport){
  gs.set(track,{x:0});
  const tl=gs.to(track,{x:()=>-(Math.max(0,track.scrollWidth-rolesViewport.clientWidth)),ease:'none',scrollTrigger:{
-  trigger:roles,start:'top top',end:'bottom bottom',scrub:.58,invalidateOnRefresh:true
+  trigger:roles,start:'top top',end:'bottom bottom',scrub:.21,invalidateOnRefresh:true
  }});
  tl.eventCallback('onUpdate',()=>{const n=Math.min(3,Math.round(tl.progress()*3));$('#rolesCount').textContent='0'+(n+1)+' — 04';});
 }
@@ -162,7 +162,7 @@ if(principle&&ribbon&&pSection){
  function localize(){const lang=document.documentElement.lang.startsWith('zh')?'zh':'en';plates.forEach((p,i)=>{$('.principles-scene-id',p).textContent=phrases[lang][i][0];$('h3',p).textContent=phrases[lang][i][1];$('p',p).textContent=phrases[lang][i][2]});}
  localize();new MutationObserver(localize).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
  gs.set(plates[0],{autoAlpha:1,y:0});gs.set(plates.slice(1),{autoAlpha:0,y:55});gs.set(ribbons[0],{autoAlpha:1,y:0});gs.set(ribbons.slice(1),{autoAlpha:0,y:20});
- const tl=timeline(pSection,.7);
+ const tl=timeline(pSection,.23);
  tl.to(plates[0],{autoAlpha:0,y:-55,duration:.12},.26)
  .to(ribbons[0],{autoAlpha:0,y:-28,duration:.12},.26)
  .to(plates[1],{autoAlpha:1,y:0,duration:.15},.32)
@@ -193,8 +193,8 @@ if(finePointer){
  });
 }
 const exp=$('#experience'),join=$('#join');
-if(exp)gs.fromTo('.experience-stage',{y:65,opacity:.78},{y:0,opacity:1,ease:'none',scrollTrigger:{trigger:exp,start:'top bottom',end:'top 32%',scrub:.75}});
-if(join)gs.fromTo('#entryHeading',{y:75,opacity:.55},{y:0,opacity:1,ease:'none',scrollTrigger:{trigger:join,start:'top bottom',end:'top 35%',scrub:.6}});
+if(exp)gs.fromTo('.experience-stage',{y:65,opacity:.78},{y:0,opacity:1,ease:'none',scrollTrigger:{trigger:exp,start:'top bottom',end:'top 32%',scrub:.24}});
+if(join)gs.fromTo('#entryHeading',{y:75,opacity:.55},{y:0,opacity:1,ease:'none',scrollTrigger:{trigger:join,start:'top bottom',end:'top 35%',scrub:.22}});
 Promise.all([document.fonts?.ready||Promise.resolve(),...$$('main img').filter(im=>im.loading!=='lazy').map(im=>im.decode().catch(()=>{}))]).then(()=>ST.refresh(true));
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)ST.refresh(true)});
 window.addEventListener('pageshow',()=>ST.refresh(true));
