@@ -12,6 +12,7 @@ body{overscroll-behavior-y:auto}
 .world-text-layer{position:absolute;left:0;top:0;right:0;max-width:870px;visibility:hidden;opacity:0;transform:translate3d(0,55px,0);will-change:transform,opacity}
 .world-text-layer:first-child{visibility:visible;opacity:1;transform:none}
 .world-text-layer .world-title{max-width:850px}
+@media(min-width:701px){.world-text-layer .world-title{font-size:clamp(70px,6.4vw,122px);letter-spacing:-.07em;line-height:.98}}
 .world-scene{opacity:1!important}
 .world-scene[data-scene="1"]{clip-path:inset(0 100% 0 0)}
 .world-scene[data-scene="2"]{clip-path:inset(100% 0 0 0)}
