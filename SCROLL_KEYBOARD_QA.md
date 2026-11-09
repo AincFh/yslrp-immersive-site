@@ -22,12 +22,20 @@ This file records measured behavior of **preview branch** `fix/scroll-motion-eng
 | 3-second deterministic 60 Hz hold | PASS | ~1,818px scroll vs ~1,838px expected in first test |
 | 18-second deterministic 60 Hz hold | PASS | 11,028px scroll vs 11,028px expected; max sample-to-sample delta 11px; traversed home, manifesto, identity, seam and world |
 | Space key release | PASS | No further scrolling observed after release; controller `held=false` and CSS class cleared |
+| 2-second deterministic 60 Hz Shift+Space | PASS | Reversed from 2500px to 1281px: 1219px up, equal to predicted distance; released correctly |
 | Focused button | PASS | Synthetic Space was not intercepted on a focused button |
 | CJK IME composition | PASS | Synthetic composition was not intercepted |
 | 1912px viewport horizontal overflow | PASS | 0px |
-| World scene title width | FIXED IN CODE | Preview had computed `.world-copy` width 0px and severe one-character wrapping; CSS width rules added in commit `e6ee297`. Require screenshot after deployment |
+| World scene typography | PASS at 1912px | Corrected 0px content width and oversized text; preview CSS commits `e6ee297` and `1ef91f` deployed, screenshot confirms no overlap with `02 / 03` counter |
 
 **Important testing limitation:** The remote Edge automation environment throttled `requestAnimationFrame` to roughly 1–2 callbacks/second during real-time scripted waits, even with document visibility `visible`. Accordingly the real-time synthetic key hold showed under-speed scrolling; this is not evidence of normal foreground 60 Hz user behavior. The deterministic 60 Hz test validates the controller's math and sequencing, **not** actual display FPS or physical keyboard performance. A physical held-Space test in a foreground browser remains mandatory before merging.
+
+## Performance trace (preview, desktop Chromium/Edge)
+
+- Lab LCP: **3,607 ms**, of which **1,419 ms TTFB** and **2,188 ms render delay**. LCP element was text. This is a single trace, not a field benchmark.
+- Lab CLS: **0.00**.
+- Reported forced reflow activity: **109 ms** across the navigation, including the legacy inline `updateNav` callback and GSAP/Lenis initial layout measurements.
+- **Not yet verified:** sustained physical-key input frame times on the user's machine; 390px viewport; layout after font swaps on slower devices. Optimize those before production merge.
 
 ## Before approving the preview for production
 
@@ -37,7 +45,7 @@ This file records measured behavior of **preview branch** `fix/scroll-motion-eng
 4. Scroll wheel and touch inputs should take over from keyboard. Inspect reduced-motion behavior separately.
 5. Validate visual transitions at 390px and 1440px viewports, including title wrapping, scene masks and horizontal role card progression.
 6. Trace FPS/long tasks on real hardware. Do not claim the 60 FPS target solely from deterministic simulation.
-7. Verify the latest Cloudflare Pages deployment contains `space-hold-v11.js` v11.2 and `motion-v11.css` corrected `.world-copy` width before any merge.
+7. Confirm the current branch preview still contains `space-hold-v11.js` v11.2 and the corrected `.world-copy` width and headline font size after a fresh deployment (both verified in this session).
 
 ## Deployment boundary
 
