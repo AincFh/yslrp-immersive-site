@@ -277,3 +277,19 @@ body.v12-editorial::before{content:"";position:fixed;inset:0;z-index:245;pointer
  .v12-editorial #manifestoImage{top:14%!important;right:10%!important;width:80vw!important;height:29svh!important}
  .v12-editorial #manifestoCopy{bottom:9%!important}
 }
+
+/* V12.2 — RP diary scene: photographed rather than dashboard-styled */
+.v12-editorial .experience-left{position:relative;isolation:isolate;overflow:hidden}
+.v12-editorial .v12-experience-photo{position:absolute;inset:0;z-index:-2;pointer-events:none}
+.v12-editorial .v12-experience-photo img{width:100%;height:100%;object-fit:cover;object-position:55% center;filter:saturate(.52) contrast(1.02) brightness(.65)}
+.v12-editorial .v12-experience-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(14,25,27,.96) 0%,rgba(14,25,27,.73) 43%,rgba(14,25,27,.36) 100%),linear-gradient(0deg,rgba(13,24,25,.86),transparent 72%)}
+.v12-editorial .experience-round .round-ring{border-color:rgba(233,224,209,.17)!important}
+.v12-editorial .experience-round{filter:grayscale(1);opacity:.78}
+.v12-editorial .experience-choices button em,.v12-editorial .experience-terms b{color:var(--v12-rose)!important}
+.v12-editorial .experience-choices button:hover{background:rgba(237,230,214,.08)}
+.v12-editorial .principles-grid{opacity:.045}
+.v12-editorial .principles-orbit{opacity:.4}
+@media(max-width:700px){
+ .v12-editorial .v12-experience-photo::after{background:linear-gradient(0deg,rgba(14,25,27,.92),rgba(14,25,27,.48) 75%),linear-gradient(90deg,rgba(14,25,27,.77),transparent)}
+ .v12-editorial .experience-round{opacity:.55}
+}
