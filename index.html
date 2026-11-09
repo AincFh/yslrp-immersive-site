@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#080b15">
+<meta name="theme-color" content="#080b15"><meta name="yslrp-motion" content="v11-preview">
 <meta name="description" content="YSLRP 圣罗兰角色扮演 — FiveM / GTA V 中文语音轻量 RP 服务器。探索城市、体验角色、了解规则与免白加入方式。">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="YSLRP · Saint Laurent Roleplay">
@@ -225,6 +225,7 @@ html{scrollbar-width:none}html::-webkit-scrollbar{display:none}
 @media(prefers-reduced-motion:reduce){.hero-sequence{opacity:0!important;display:none}}
 </style>
 <title>YSLRP — Saint Laurent Roleplay | An Interactive World</title>
+<link rel="stylesheet" href="/motion-v11.css">
 </head>
 <body>
 <a class="skip-link" href="#manifesto" data-i18n="skip">跳至主要内容</a>
@@ -352,16 +353,20 @@ const storyData=[['THE STREETS','worldTitle0','worldDesc0'],['THE ROAD','worldTi
 function updateWorldText(force=false){const row=storyData[worldIndex];$('#worldAct').textContent=`0${worldIndex+1} / ${row[0]}`;$('#worldTitle').innerHTML=dict[locale][row[1]];$('#worldDescription').textContent=dict[locale][row[2]];$('#worldCount').innerHTML=`0${worldIndex+1} <span>/ 03</span>`;worldBars.forEach((el,i)=>el.classList.toggle('active',i===worldIndex));}
 function updateExperience(force=false){const n=experienceIndex;$('#experienceNumber').textContent=String(n+1).padStart(2,'0');$('#experienceAct').textContent=['CHAPTER ONE / ARRIVAL','CHAPTER TWO / CONNECT','CHAPTER THREE / BECOME'][n];$('#experienceResult').textContent=dict[locale]['choiceTitle'+n];$('#experienceText').textContent=dict[locale]['choiceDesc'+n];$$('[data-choice]').forEach((b,i)=>{b.classList.toggle('selected',i===n);b.setAttribute('aria-pressed',String(i===n))});}
 $$('[data-choice]').forEach(b=>b.addEventListener('click',()=>{experienceIndex=Number(b.dataset.choice);updateExperience();$('#experienceNumber').animate([{transform:'scale(.72)',opacity:.4},{transform:'scale(1)',opacity:1}],{duration:430,easing:'cubic-bezier(.22,1,.36,1)'})}));
-function compute(){scrollY=presentationY;window.__yslrpPresentationScrollY=presentationY;const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);progress.style.width=(scrollY/max*100).toFixed(2)+'%';header.classList.toggle('scrolled',scrollY>28);const center=innerHeight*.5;let active='home';for(const id of sections){if($('#'+id).getBoundingClientRect().top<center)active=id;}rail.forEach(a=>{const yes=a.dataset.chapter===active;a.classList.toggle('active',yes);if(yes)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')});$('#chapterNow').textContent=String(sections.indexOf(active)+1).padStart(2,'0')+' / 07';$('.chapter-rail').classList.toggle('on-light',active==='manifesto'||active==='roles');$$('.site-nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+active));
-if(reduced){return}
-const h=scrollProgress(hero);$('#heroPhoto').style.transform=`translate3d(0,${(-h*3).toFixed(2)}%,0) scale(${(1.07+h*.19).toFixed(3)})`;$('#heroContent').style.opacity=String(1-smooth(clamp((h-.42)/.28)));$('#heroContent').style.transform=`translateY(calc(-43% - ${Math.round(h*100)}px))`;$('#heroFrame').style.transform=`scale(${(1.04-h*.23).toFixed(3)})`;$('.hero-transition').style.transform=`translateY(${(105-105*smooth(clamp((h-.66)/.3))).toFixed(2)}%)`;
-const m=scrollProgress(manifesto),sceneImg=$('#manifestoImage'),intro=$('#manifestoHeading'),copy=$('#manifestoCopy');const mob=innerWidth<=600;intro.style.opacity=String(1-smooth(clamp((m-.26)/.24)));intro.style.transform=`translateY(calc(-50% - ${Math.round(35*m)}px)) scale(${(1+.14*m).toFixed(3)})`;const reveal=smooth(clamp((m-.22)/.43));sceneImg.style.right=mob?`${lerp(-90,10,reveal).toFixed(1)}vw`:`${lerp(-56,5,reveal).toFixed(1)}vw`;sceneImg.style.transform=`rotate(${lerp(4,0,reveal).toFixed(2)}deg) scale(${lerp(.7,1,reveal).toFixed(3)})`;sceneImg.style.opacity=String(clamp(reveal*1.4));copy.style.opacity=String(smooth(clamp((m-.65)/.24)));copy.style.transform=`translateY(${Math.round((1-smooth(clamp((m-.65)/.24)))*55)}px)`;
-const w=scrollProgress(world),step=w*2.05;storyScenes.forEach((sc,i)=>{const weight=clamp(1-Math.abs(step-i));sc.style.opacity=String(weight);sc.style.transform=`scale(${(1.12-.08*w).toFixed(3)}) translate3d(0,${(4-8*w).toFixed(2)}%,0)`});const idx=w<.29?0:w<.69?1:2;if(worldIndex!==idx){worldIndex=idx;updateWorldText();$('#worldTitle').animate([{transform:'translateY(22px)',opacity:.25},{transform:'translateY(0)',opacity:1}],{duration:520,easing:'cubic-bezier(.22,1,.36,1)'})}
-const r=scrollProgress(roles),trackDistance=Math.max(0,roleTrack.scrollWidth-$('.roles-viewport').clientWidth);roleTrack.style.transform=`translate3d(${-Math.round(trackDistance*r)}px,0,0)`;const rIdx=Math.min(3,Math.round(r*3));if(rIdx!==roleIndex){roleIndex=rIdx;$('#rolesCount').textContent=`0${rIdx+1} — 04`}
+function compute(){
+ const y=window.scrollY||0;presentationY=y;scrollY=y;window.__yslrpPresentationScrollY=y;
+ const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+ progress.style.width=(y/max*100).toFixed(2)+'%';header.classList.toggle('scrolled',y>28);
+ let active='home';for(const id of sections){if($('#'+id).getBoundingClientRect().top<innerHeight*.53)active=id;}
+ rail.forEach(a=>{const yes=a.dataset.chapter===active;a.classList.toggle('active',yes);if(yes)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')});
+ $('#chapterNow').textContent=String(sections.indexOf(active)+1).padStart(2,'0')+' / 07';
+ $('.chapter-rail').classList.toggle('on-light',active==='manifesto'||active==='roles');
+ $('.site-nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+active));
 }
-function queueScroll(){if(!scrollQueued){scrollQueued=true;requestAnimationFrame(scrollFrame)}}
-function scrollFrame(){const target=window.scrollY||0;const delta=target-presentationY;presentationY+=delta*(reduced?.999:.255);if(Math.abs(delta)<.25)presentationY=target;compute();window.dispatchEvent(new Event('yslrp:frame'));if(Math.abs(target-presentationY)>.25)requestAnimationFrame(scrollFrame);else scrollQueued=false;}
-window.addEventListener('scroll',queueScroll,{passive:true});window.addEventListener('resize',queueScroll,{passive:true});window.addEventListener('load',queueScroll,{once:true});
+function queueScroll(){if(scrollQueued)return;scrollQueued=true;requestAnimationFrame(()=>{scrollQueued=false;compute()})}
+window.addEventListener('scroll',queueScroll,{passive:true});
+window.addEventListener('resize',queueScroll,{passive:true});
+window.addEventListener('pageshow',queueScroll,{passive:true});
 function jumpRole(delta){const next=clamp(roleIndex+delta,0,3);const target=roles.offsetTop+(roles.offsetHeight-innerHeight)*(next/3);window.scrollTo({top:Math.max(0,target),behavior:reduced?'auto':'smooth'})}
 $('#rolePrev').addEventListener('click',()=>jumpRole(-1));$('#roleNext').addEventListener('click',()=>jumpRole(1));
 function toast(str){const el=$('#toast');el.textContent=str;el.classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>el.classList.remove('show'),2000)}
@@ -371,182 +376,14 @@ $$('img').forEach(img=>img.draggable=false);document.addEventListener('dragstart
 if(!coarse&&!reduced){document.addEventListener('pointermove',e=>{if(e.pointerType==='mouse'){document.body.classList.add('pointer-active');$('#pointerGlow').style.left=e.clientX+'px';$('#pointerGlow').style.top=e.clientY+'px'}},{passive:true});document.addEventListener('pointerleave',()=>document.body.classList.remove('pointer-active'))}
 if(reduced){document.body.classList.add('reduced-motion');$$('.world-scene').forEach((sc,i)=>sc.style.opacity=String(i===0));$('#manifestoCopy').style.opacity='1';$('#manifestoCopy').style.transform='none';$('#manifestoImage').style.right='5vw';$('#manifestoImage').style.opacity='1';$('#manifestoImage').style.transform='none';$('#heroVideo').pause();}
 else{const v=$('#heroVideo');v.addEventListener('error',()=>{v.style.display='none'});v.play().catch(()=>{v.style.display='none'});}
+window.__yslrpI18n={dict,get locale(){return locale}};
 applyLocale(chooseInitialLocale());compute();
 })();
 
-/* YSLRP Cinema Engine v9 — original scroll-staged mask, stripe, cursor and editorial sequence.
- * Technique references: GSAP's scrub/pin concepts, Codrops SVG Mask Transitions (2026),
- * Chrome motion guidance. Implemented using native sticky scroll + requestAnimationFrame.
- * No forced wheel interception, fake scrollbar, WebGL dependency or paid service.
- */
-(() => {
- 'use strict';
- const $=(s,p=document)=>p.querySelector(s);const $$=(s,p=document)=>Array.from(p.querySelectorAll(s));
- const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
- const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
- const clamp=(x,min=0,max=1)=>Math.max(min,Math.min(max,x));
- const smooth=x=>{x=clamp(x);return x*x*(3-2*x)};
- const lerp=(a,b,t)=>a+(b-a)*t;
- const seam=$('#seam'),picture=$('#seamPicture'),bands=$('#seamBands'),copy=$('#seamCopy'),end=$('#seamEnd');
- const stripes=$$('.seam-band'),world=$('#world'),scenes=$$('.world-scene');
- const hero=$('#home'),video=$('#heroVideo'),entry=$('#join'),experience=$('#experience');
- let raf=false,videoReady=false,videoDuration=0,lastVideoSeek=-1;
- const portalText={
-  zh:{eyebrow:'每一步向前，都是新篇章。',title:'故事不会<br><em>停在一张图片里。</em>',desc:'在这里，世界不会等你读完介绍才开始运转。向下滚动，让眼前的城市从宁静走向鲜活。',end:'真正的故事，始于相遇。',hint:'滚动以推动场景 / SCROLL TO DIRECT'},
-  en:{eyebrow:'EVERY STEP BECOMES A NEW CHAPTER.',title:'THE STORY<br><em>WON’T STAY STILL.</em>',desc:'This city never waits for an introduction to finish. Scroll to change the scene, from quiet horizons to lives in motion.',end:'EVERY STORY BEGINS WITH A MEETING.',hint:'SCROLL TO DIRECT THE SCENE'}
- };
- function syncLocale(){const lang=document.documentElement.lang.startsWith('zh')?'zh':'en';const t=portalText[lang];$$('[data-seam-i18n]').forEach(el=>{const key=el.dataset.seamI18n;if(!t[key])return;if(key==='title')el.innerHTML=t[key];else el.textContent=t[key]});}
- new MutationObserver(syncLocale).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});syncLocale();
- function pct(el){const max=Math.max(1,el.offsetHeight-innerHeight);const abs=el.getBoundingClientRect().top+window.scrollY;const y=window.__yslrpPresentationScrollY ?? window.scrollY;return clamp((y-abs)/max);}
- function update(){raf=false;if(reduce)return;
-  const t=pct(seam);
-  // Stage 1: framed photograph expands into a portal on a sticky plane.
-  const exp=smooth(t/.30);picture.style.setProperty('--scale',lerp(.63,1.07,exp).toFixed(3));
-  picture.style.setProperty('--rad',`${Math.round((1-exp)*35)}px`);
-  picture.style.opacity=String(1-smooth((t-.53)/.19)*.7);
-  const toFirst=smooth((t-.04)/.34);
-  copy.style.opacity=String(1-smooth((t-.25)/.2));
-  copy.style.transform=`translate3d(0,calc(-44% - ${Math.round(toFirst*62)}px),0)`;
-  // Stage 2: staggered blinds reveal a separate night scene, each slice responding to scroll.
-  const b=smooth((t-.27)/.45);
-  bands.style.opacity=String(smooth((t-.22)/.14));
-  stripes.forEach((stripe,i)=>{
-    const local=smooth((b-i*.045)/.72);
-    const distance=(i%2?-1:1)*Math.round((1-local)*Math.max(innerWidth*.85,430));
-    stripe.style.setProperty('--shift',distance+'px');
-  });
-  // Stage 3: text only appears once the new visual is substantially revealed.
-  const outro=smooth((t-.76)/.19);
-  end.style.opacity=String(outro);
-  end.style.transform=`translateY(${Math.round((1-outro)*46)}px)`;
-  $('#seamMeter').textContent=String(Math.round(t*100)).padStart(3,'0')+'%';
-  // Full-screen scene crossfade gets an additional cinematic directional mask.
-  const w=pct(world);
-  const i1=smooth((w-.12)/.38),i2=smooth((w-.5)/.39);
-  scenes[1]?.style.setProperty('clip-path',`inset(0 ${((1-i1)*100).toFixed(2)}% 0 0)`);
-  scenes[2]?.style.setProperty('clip-path',`inset(${((1-i2)*100).toFixed(2)}% 0 0 0)`);
-  $('#worldGridMask').style.setProperty('--world-grid-opacity',String(.16*Math.sin(Math.PI*w)));
-  $('#world').style.setProperty('--scan-x',`${(20+60*w).toFixed(1)}%`);
-  // Deliberately do not seek video.currentTime on each wheel event: browser decoders stutter.
-  const exRect=experience.getBoundingClientRect();const ep=clamp((innerHeight-exRect.top)/(innerHeight+exRect.height));
-  experience.style.setProperty('--experience-x',`${Math.round((1-ep)*110)}%`);
-  const joinRect=entry.getBoundingClientRect();const jp=clamp((innerHeight-joinRect.top)/Math.max(1,innerHeight));
-  const heading=$('#entryHeading');heading.style.transform=`translate3d(0,${Math.round((1-smooth(jp))*42)}px,0)`;
-  heading.style.opacity=String(.75+.25*smooth(jp));
- }
- function queue(){if(!raf){raf=true;requestAnimationFrame(update)}}
- addEventListener('scroll',queue,{passive:true});addEventListener('yslrp:frame',queue,{passive:true});addEventListener('resize',queue,{passive:true});addEventListener('pageshow',queue);
- document.addEventListener('visibilitychange',()=>{if(!document.hidden)queue()});
- if(video){video.loop=true;video.muted=true;video.playsInline=true;}
- // Pointer-aware material; magnetic CTAs only. Always leave native cursor elsewhere.
- const cursor=$('#kineticCursor');let targetX=-200,targetY=-200,posX=-200,posY=-200,running=false,inside=false;
- function cursorTick(){posX+=(targetX-posX)*.23;posY+=(targetY-posY)*.23;cursor.style.transform=`translate3d(${posX.toFixed(2)}px,${posY.toFixed(2)}px,0)`;
-  if(Math.abs(targetX-posX)+Math.abs(targetY-posY)>.25&&inside){requestAnimationFrame(cursorTick)}else{running=false;}}
- if(fine&&!reduce){document.body.classList.add('cinematic-pointer');
-  document.addEventListener('pointermove',e=>{
-   if(e.pointerType!=='mouse')return;inside=true;targetX=e.clientX;targetY=e.clientY;
-   const isAction=!!e.target.closest('a,button');cursor.classList.toggle('is-action',isAction);
-   const heroRect=hero.getBoundingClientRect();if(heroRect.bottom>0&&heroRect.top<innerHeight){hero.style.setProperty('--light-x',(e.clientX/innerWidth*100).toFixed(1)+'%');hero.style.setProperty('--light-y',(e.clientY/innerHeight*100).toFixed(1)+'%');}
-   if(!running){running=true;requestAnimationFrame(cursorTick)}
-  },{passive:true});
-  document.addEventListener('pointerleave',()=>{inside=false;targetX=-200;targetY=-200;cursor.style.transform='translate3d(-200px,-200px,0)';running=false});
-  $$('.hero-ctas .pill,.header-join').forEach(a=>{
-   a.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const r=a.getBoundingClientRect();const x=((e.clientX-r.left)/r.width-.5)*13,y=((e.clientY-r.top)/r.height-.5)*9;a.style.transform=`translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;},{passive:true});
-   a.addEventListener('pointerleave',()=>a.style.transform='translate3d(0,0,0)');
-  });
- }
- // Ensure every image is a local static resource and no image can be dragged as a link.
- document.addEventListener('dragstart',e=>{if(e.target instanceof HTMLImageElement)e.preventDefault()});
- queue();
-})();
 
-/* YSLRP / scroll direction v10. Inspired by principles from Codrops' SeamTransitions,
- * TextClipScroll and the GSAP ScrollTrigger documentation; original code.
- * Zero runtime dependencies and no interception of native mouse wheel behavior.
- */
-(()=>{'use strict';
-const $=(q,p=document)=>p.querySelector(q), $$=(q,p=document)=>[...p.querySelectorAll(q)];
-const id=$('#identity'),stage=$('#principles');if(!id||!stage)return;
-const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const clamp=(x,min=0,max=1)=>Math.min(max,Math.max(min,x));
-const smooth=(x)=>{x=clamp(x);return x*x*(3-2*x)};
-const lerp=(a,b,t)=>a+(b-a)*t;
-const title=$('#identityTitle'),content=$('.identity-content'),glint=$('.identity-glint');
-// 21 authored frames from the 7s original loop. Interpolate between adjacent
-// static WebP frames instead of issuing repeated seek operations to the video decoder.
-const seq=$('#heroSequence'),aFrame=$('#heroSequenceA'),bFrame=$('#heroSequenceB');
-const frameCache=Array.from({length:21},(_,i)=>{const im=new Image();im.src=(window.__YS_FRAME_DATA?.[i]??'/assets/frames/shot-'+String(i+1).padStart(2,'0')+'.webp');return im;});
-let lastFrameIndex=-1,sequenceActive=false;
-const readyHeroSequence=()=>{if(sequenceActive)return;sequenceActive=true;seq?.classList.add('ready');const video=$('#heroVideo');if(video){video.pause();video.style.opacity='0';}};
-frameCache[0].onload=readyHeroSequence;if(frameCache[0].complete&&frameCache[0].naturalWidth>0)readyHeroSequence();
-function updateHeroFrames(){if(!sequenceActive||reduced||!aFrame||!bFrame)return;const hero=$('#home');if(!hero)return;const rect=hero.getBoundingClientRect();if(rect.bottom<0||rect.top>innerHeight)return;const p=progress(hero),frame=p*20,i=Math.min(19,Math.floor(frame)),alpha=clamp(frame-i);if(lastFrameIndex!==i){lastFrameIndex=i;aFrame.src=frameCache[i].src;bFrame.src=frameCache[i+1].src;}bFrame.style.opacity=alpha.toFixed(3);}
-const principle=$('.principles-scene'),counter=$('#principlesCounter'),ribbon=$('#principlesRibbon'),orbit=$('.p-orbit-one');
-const phrases={
- zh:[
-  {slug:'IC',badge:'01 / IC',title:'成为角色，而不是操纵角色。',copy:'进入城市后，以虚构人物的身份交流。行为和故事应符合人物处境，尊重角色内（IC）与角色外（OOC）的边界。'},
-  {slug:'RP',badge:'02 / COMMUNITY',title:'你不是唯一的主角。',copy:'这是多人共同发展的角色扮演世界。倾听、回应、协作和合理冲突，都需要给其他玩家留下参与故事的空间。'},
-  {slug:'∞',badge:'03 / CONTINUITY',title:'让选择有原因，也有后续。',copy:'长线故事从一次次交流中产生。了解服务器规则、尊重公平，才能让角色经历与关系自然地延续。'}
- ],
- en:[
-  {slug:'IC',badge:'01 / IC',title:'BE YOUR CHARACTER.',copy:'Interact through a fictional persona and act with plausible motivations. Keep in-character (IC) and out-of-character (OOC) communication distinct.'},
-  {slug:'RP',badge:'02 / COMMUNITY',title:'YOU ARE NOT THE ONLY LEAD.',copy:'This is a shared roleplay world. Listen, respond, collaborate, and give other players space to shape the story alongside you.'},
-  {slug:'∞',badge:'03 / CONTINUITY',title:'LET CHOICES HAVE CONSEQUENCES.',copy:'Long-running stories emerge from everyday conversations. Learn the rules, play fairly, and allow characters and relationships to grow.'}
- ]
-};
-const plateModels=[];const ribbonModels=[];
-// Three real DOM plates, not abrupt text replacement. Their enter/hold/exit phases
-// are deterministic in both scroll directions.
-function createStages(){
- principle.innerHTML='';ribbon.textContent='';
- for(let i=0;i<3;i++){
-  const plate=document.createElement('div');plate.className='principle-plate';plate.dataset.index=String(i);
-  plate.innerHTML='<span class="principles-scene-id"></span><h3></h3><p></p>';
-  plate.style.opacity=i===0?'1':'0';principle.append(plate);plateModels.push(plate);
-  const r=document.createElement('div');r.className='principle-ribbon-label';r.style.opacity=i===0?'1':'0';r.textContent=['IC','RP','∞'][i];ribbon.append(r);ribbonModels.push(r);
- }
-}
-createStages();
-let lastLang='',lastStage=-1,needsFrame=false;
-function localize(){const lang=document.documentElement.lang.startsWith('zh')?'zh':'en';if(lang===lastLang)return;lastLang=lang;
- phrases[lang].forEach((row,i)=>{const plate=plateModels[i];$('.principles-scene-id',plate).textContent=row.badge;$('h3',plate).textContent=row.title;$('p',plate).textContent=row.copy;});
-}
-new MutationObserver(()=>{localize();queue()}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
-function progress(el){const abs=el.getBoundingClientRect().top+window.scrollY,y=window.__yslrpPresentationScrollY??window.scrollY;return clamp((y-abs)/Math.max(1,el.offsetHeight-innerHeight));}
-function update(){needsFrame=false;localize();
- if(reduced)return;
- updateHeroFrames();
- const t=progress(id),show=smooth((t-.05)/.3),settle=smooth((t-.32)/.28),depart=smooth((t-.76)/.24);
- const scale=lerp(.6,1.08,show)*(1-.18*settle);
- title.style.transform=`translate3d(-50%,calc(-50% - ${Math.round(55*settle)}px),0) scale(${scale.toFixed(4)}) rotate(${(-5+5*show).toFixed(2)}deg)`;
- title.style.opacity=String(.18+.76*show-.62*settle-.23*depart);
- const c=smooth((t-.44)/.19)*(1-smooth((t-.92)/.08));
- content.style.opacity=String(c);
- content.style.transform=`translate3d(0,${Math.round((1-c)*80-14*depart)}px,0)`;
- glint.style.transform=`translate3d(${Math.round(-90+t*190)}%,0,0)`;
- glint.style.opacity=String(.18+.3*show);
- id.style.setProperty('--identity-flow',t.toFixed(3));
- const p=progress(stage);const pIndex=Math.min(2,Math.floor(Math.min(.999,p)*3));
- // Each of the three phases has equal scroll travel but a dedicated hold window.
- for(let i=0;i<3;i++){
-  const start=i/3,end=(i+1)/3;
-  const entrance=i===0?1:smooth((p-start)/.08);
-  const exit=i===2?1:1-smooth((p-(end-.095))/.085);
-  const opacity=entrance*exit;
-  const y=lerp(52,0,entrance)+lerp(0,-45,1-exit);
-  plateModels[i].style.opacity=opacity.toFixed(4);plateModels[i].style.transform=`translate3d(0,${y.toFixed(1)}px,0)`;
-  ribbonModels[i].style.opacity=opacity.toFixed(4);ribbonModels[i].style.transform=`translate3d(0,${(y*.3).toFixed(1)}px,0) scale(${lerp(.92,1,entrance).toFixed(3)})`;
- }
- if(lastStage!==pIndex){lastStage=pIndex;counter.textContent=String(pIndex+1).padStart(2,'0')+' / 03';$$('.principles-bars i').forEach((b,i)=>b.classList.toggle('active',i===pIndex));}
- orbit.style.transform=`translate3d(${(-12+p*20).toFixed(2)}%,${(p*13).toFixed(2)}%,0) rotate(${(20+p*40).toFixed(1)}deg)`;
- $('.p-orbit-two').style.transform=`translate3d(${(10-p*21).toFixed(2)}%,${(p*-9).toFixed(2)}%,0) rotate(${(-8-p*48).toFixed(1)}deg)`;
- stage.style.setProperty('--principles-progress',p.toFixed(4));
-}
-function queue(){if(needsFrame)return;needsFrame=true;requestAnimationFrame(update)}
-addEventListener('yslrp:frame',queue,{passive:true});addEventListener('scroll',queue,{passive:true});addEventListener('resize',queue,{passive:true});
-addEventListener('pageshow',queue,{passive:true});
-// Keep deterministic static fallback for reduced-motion and old browsers.
-if(reduced){title.style.opacity='.23';content.style.opacity='1';plateModels.forEach((p,i)=>{p.style.opacity='1';p.style.transform='none'});}
-queue();
-})();
 </script>
+<script src="/lib/gsap.min.js" defer></script>
+<script src="/lib/ScrollTrigger.min.js" defer></script>
+<script src="/lib/lenis.min.js" defer></script>
+<script src="/motion-v11.js" defer></script>
 </body></html>

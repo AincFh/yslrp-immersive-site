@@ -1,0 +1,43 @@
+
+/* YSLRP Motion v11 — source-of-truth scroll timeline; no duplicate rAF loops. */
+html{scroll-behavior:auto!important}
+body{overscroll-behavior-y:auto}
+.hero-sequence{opacity:0;transition:opacity .28s ease}
+.hero-sequence.ready{opacity:1}
+.hero-sequence>img{display:none!important}
+.hero-sequence canvas{display:block;width:100%;height:100%;object-fit:cover;transform:translateZ(0);pointer-events:none}
+.hero-scroll .hero-content,.manifesto-heading,.manifesto-copy,.manifesto-reveal-image,
+.identity-title,.identity-content,.seam-copy,.seam-end,.roles-track,.world-text-layer,.principle-plate{backface-visibility:hidden}
+.world-copy{min-height:340px;top:47%;z-index:8}
+.world-text-layer{position:absolute;left:0;top:0;right:0;max-width:870px;visibility:hidden;opacity:0;transform:translate3d(0,55px,0);will-change:transform,opacity}
+.world-text-layer:first-child{visibility:visible;opacity:1;transform:none}
+.world-text-layer .world-title{max-width:850px}
+.world-scene{opacity:1!important}
+.world-scene[data-scene="1"]{clip-path:inset(0 100% 0 0)}
+.world-scene[data-scene="2"]{clip-path:inset(100% 0 0 0)}
+.world-scenes .world-scene img{transform:scale(1.05);will-change:transform}
+.principles-scene{position:relative;min-height:225px}
+.principle-plate{position:absolute;inset:0;visibility:hidden;opacity:0;will-change:transform,opacity}
+.principle-plate:first-child{visibility:visible;opacity:1}
+.principles-ribbon{position:relative}
+.principle-ribbon-label{position:absolute;inset:0;visibility:hidden;opacity:0;will-change:transform,opacity}
+.principle-ribbon-label:first-child{visibility:visible;opacity:1}
+#kineticCursor{pointer-events:none}
+#heroSequenceA,#heroSequenceB{display:none}
+.motion-debug{display:none}
+@media(max-width:700px){
+ .world-copy{min-height:280px;top:42%}
+ .world-text-layer .world-title{font-size:clamp(48px,12vw,84px)}
+ .principles-scene{min-height:260px}
+ .hero-sequence canvas{object-position:61% center}
+}
+@media(prefers-reduced-motion:reduce){
+ .world-copy{min-height:unset}
+ .world-text-layer{position:static;opacity:1!important;visibility:visible!important;transform:none!important}
+ .world-text-layer:not(:first-child){display:none}
+ .world-scene[data-scene="1"],.world-scene[data-scene="2"]{display:none!important}
+ .principle-plate{position:relative;opacity:1!important;visibility:visible!important;transform:none!important;margin-bottom:20px}
+ .principles-scene{min-height:unset}
+ .principles-ribbon{display:none}
+ .hero-sequence{display:none}
+}
